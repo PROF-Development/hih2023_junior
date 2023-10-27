@@ -1,7 +1,13 @@
 <header>
     <div class="logo">Главная страница</div>
+    {% if user.is_authenticated %}
     <div class="header-buttons">
-        <a href="#"> <button class="register-button">Регистрация</button> </a>
-        <a href="#"> <button class="login-button">Вход</button> </a>
+        <a href="{% url 'logout' %}"> <button class="logout-button">Выход</button> </a>
     </div>
+    {% else %}
+    <div class="header-buttons">
+        <a href="{% url 'registration' %}"> <button class="register-button">Регистрация</button> </a>
+        <a href="{% url 'login' %}"> <button class="login-button">Вход</button> </a>
+    </div>
+    {% endif %}
 </header>
