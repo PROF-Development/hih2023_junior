@@ -49,25 +49,18 @@
         <div class="search-label">Поиск документов</div>
         <form method="POST">
             {% csrf_token %}
-            <input type="text" name="input_field" class="search-input" placeholder="Поиск...">
+            <input name="document_name" type="text" class="search-input" placeholder="Поиск...">
         </form>
     </div>
-    {% if docs is not None %}
-    <ul>
-        <li> {{docs}} </li>
-    </ul>
-    {% endif %}
-    <section class="volunteer-info">
-        <div class="volunteer-description"> </div>
-
-
-
-        <div class="volunteer-photos">
-            <div class="volunteer-photo" style="background-image: url('volunteer1.jpg');">
-                <p>Делаем добро вместе</p>
-            </div>
-            <div class="volunteer-photo" style="background-image: url('volunteer2.jpg');"></div>
-        </div>
+    <section class="found_documents">
+        {% if request.method == "POST" %}
+                {% for document, data in documents.items %}
+                <button name={{document}} >
+                    {{ data.document_name }}
+                </button>
+                <br/>
+                {% endfor %}
+        {% endif %}
     </section>
 </main>
 {% endblock %}
