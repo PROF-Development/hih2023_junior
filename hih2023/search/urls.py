@@ -13,4 +13,5 @@ urlpatterns = [
     #     name='edit_profile'
     # ),
     path('auth/registration/', views.registration_view, name='registration'),
+    path('viewer', views.viewer, name='viewer'),
 ]

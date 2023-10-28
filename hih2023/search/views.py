@@ -8,6 +8,7 @@ from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from .forms import RegistrationForm
 from .models import User
+from django.http import FileResponse, Http404, HttpResponse
 
 # import models as model
 import search.processing_modules as function
@@ -23,6 +24,22 @@ def index(request):
 
     return render(request, template, context)
 
+# Does not work properly at the moment
+def viewer(request):
+    filename = ''
+    if request.method == 'GET':
+        filename = request.GET.get('n', '')
+
+    try:
+        # return FileResponse(open(f'data/{filename}'), 'rb', content_type='application')
+        return FileResponse(open(f'data/test.pdf', 'rb'), content_type='application/pdf')
+    except FileNotFoundError:
+        raise Http404()
+
+    # context = {}
+    # template = 'search/viewer.html'
+    # return render(request, template, context)
+    # response =
 
 
 def registration_view(request):
