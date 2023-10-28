@@ -1,12 +1,12 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth.forms import PasswordChangeForm
 
 
 class RegistrationForm(forms.Form):
-    full_name = forms.CharField(max_length=100, required=True, help_text="Обязательное поле.")
-    email = forms.EmailField(required=True, help_text="Обязательное поле.")
-    password = forms.CharField(widget=forms.PasswordInput, required=True, help_text="Обязательное поле.")
+    full_name = forms.CharField(label='ФИО', max_length=100, required=True, help_text="Обязательное поле.")
+    email = forms.EmailField(label='Почта', required=True, help_text="Обязательное поле.")
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput, required=True, help_text="Обязательное поле.")
 
     def save(self):
         full_name = self.cleaned_data['full_name']
@@ -18,19 +18,18 @@ class RegistrationForm(forms.Form):
         return user
 
 
-class CustomPasswordChangeForm(SetPasswordForm):
-    old_password = forms.CharField(
-        label="Старый пароль",
-        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
-    )
-    new_password = forms.CharField(
-        label="Подтвердите пароль",
-        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
-    )
-    confirm_new_password = forms.CharField(
-        label="Подтвердите новый пароль",
-        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
-    )
-
+class PasswordChangingForm(PasswordChangeForm):
+# …
     class Meta:
         model = User
+        fields = ['old_password', 'new_password1', 'new_password2']
+        labels = {
+            'old_password': ('Старый пароль'),
+            'new_password1': ('Новый пароль'),
+            'new_password2': ('Подтвердить новый пароль'),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for key in self.Meta.labels:
+            self.fields[key].label = self.Meta.labels[key]

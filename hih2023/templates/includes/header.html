@@ -1,8 +1,13 @@
 <header>
-    <div class="logo">Главная страница</div>
+    <div class="logo">
+        <a href="{% url 'search:index' %}">
+        Главная страница
+        </a>
+    </div>
     {% if user.is_authenticated %}
     <div class="header-buttons">
         <a href="{% url 'logout' %}"> <button class="logout-button">Выход</button> </a>
+        <a href="{% url 'search:profile' user.username %}"> <button class="account-button">Личный кабинет</button> </a>
     </div>
     {% else %}
     <div class="header-buttons">

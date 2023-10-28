@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import update_session_auth_hash, login
 from django.contrib.auth.decorators import login_required
 
-from .forms import RegistrationForm, CustomPasswordChangeForm
+from .forms import RegistrationForm, PasswordChangingForm
 from .models import User
 
 
@@ -46,12 +46,19 @@ def registration_view(request):
 @login_required
 def change_password(request):
     template = 'registration/password_change_form.html'
-    if request.method == 'POST':
-        form = CustomPasswordChangeForm(request.user, request.POST)
+    # if request.method == 'POST':
+    #     form = CustomPasswordChangeForm(request.user, request.POST)
+    #     if form.is_valid():
+    #         user = form.save()
+    #         update_session_auth_hash(request, user)
+    #         return redirect('search:profile')
+    # else:
+    #     form = CustomPasswordChangeForm(request.user)
+    if request.method == "POST":
+        form = PasswordChangingForm(user=request.user, data=request.POST)
         if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user)
-            return redirect('search:profile')
+            form.save()
+            update_session_auth_hash(request, form.user)
     else:
-        form = CustomPasswordChangeForm(request.user)
+        form = PasswordChangingForm(request.user)
     return render(request, template, {'form': form})
