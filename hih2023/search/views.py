@@ -20,26 +20,20 @@ def index(request):
     if request.method == "POST":
         req_dict = request.POST.dict()
         context["documents"] = function.get_documents(req_dict)
-        print(req_dict)
 
     return render(request, template, context)
 
+
 # Does not work properly at the moment
 def viewer(request):
-    filename = ''
     if request.method == 'GET':
-        filename = request.GET.get('n', '')
+        filename = request.GET.get('id', '')
+        application = filename.split('.')[-1]
 
-    try:
-        # return FileResponse(open(f'data/{filename}'), 'rb', content_type='application')
-        return FileResponse(open(f'data/test.pdf', 'rb'), content_type='application/pdf')
-    except FileNotFoundError:
-        raise Http404()
-
-    # context = {}
-    # template = 'search/viewer.html'
-    # return render(request, template, context)
-    # response =
+        try:
+            return FileResponse(open(f'data/files/{filename}', 'rb'), content_type=f'application/{application}')
+        except FileNotFoundError:
+            raise Http404()
 
 
 def registration_view(request):
