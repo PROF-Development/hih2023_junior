@@ -16,7 +16,6 @@ def get_matches(name: str, check_name: str):
         if matches:
             matches_count += 1
 
-    print(matches_count, len(arr_check_name), matches_count / len(arr_check_name))
     if matches_count / len(arr_check_name) >= 0.5:
         return True
     else:
