@@ -17,7 +17,9 @@ def index(request):
     context = {"documents": None}
     template = 'search/index.html'
     if request.method == "POST":
-        context["documents"] = function.get_documents(request.POST.dict())
+        req_dict = request.POST.dict()
+        context["documents"] = function.get_documents(req_dict)
+        print(req_dict)
 
     return render(request, template, context)
 
