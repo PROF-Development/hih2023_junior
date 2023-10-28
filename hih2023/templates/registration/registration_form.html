@@ -9,12 +9,18 @@
       <div class="card-body">
         <form method="post">
           {% csrf_token %}
+          <div>
           {{ form.full_name.label_tag }}
           {{ form.full_name }}
+          </div>
+          <div>
           {{ form.email.label_tag }}
           {{ form.email }}
+          </div>
+          <div>
           {{ form.password.label_tag }}
           {{ form.password }}
+          </div>
           <button type="submit" class="btn btn-primary">Создать</button>
         </form>
       </div>

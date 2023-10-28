@@ -116,6 +116,8 @@ USE_TZ = True
 
 LOGIN_REDIRECT_URL = 'search:index'
 
+LOGOUT_REDIRECT_URL = 'search:index'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
