@@ -26,13 +26,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('search.urls', namespace='search')),
     path('auth/', include('django.contrib.auth.urls')),
-    # path(
-    #     'auth/registration/',
-    #     CreateView.as_view(
-    #         template_name='registration/registration_form.html',
-    #         form_class=RegistrationForm,
-    #     ),
-    #     name='registration',
-    # ),
     path('auth/registration/', registration_view, name='registration'),
 ]
