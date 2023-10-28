@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="1.css">
+    <title>Главная страница</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #FEC502;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .register-button,
+        .login-button {
+            background: #222127;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Главная страница</div>
+        <div class="header-buttons">
+            <button class="register-button">Регистрация</button>
+            <button class="login-button">Вход</button>
+        </div>
+    </header>
+    <div class="search-container">
+        <div class="search-icon">🔍</div> <!-- Вместо "🔍" добавьте код для изображения лупы -->
+        <div class="search-label">Поиск документов</div>
+        <form method="POST">
+            {% csrf_token %}
+            <input name="document_name" type="text" class="search-input" placeholder="Поиск...">
+        </form>
+    </div>
+    <main>
+        <section class="found_documents">
+            {% if request.method == "POST" %}
+                    {% for document, data in documents.items %}
+                    <button name={{document}} >
+                        {{ data.document_name }}
+                    </button>
+                    <br/>
+                    {% endfor %}
+            {% endif %}
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Ваша Организация</p>
+    </footer>
+    <script>
+        // Ваш JavaScript скрипт здесь, если он необходим
+    </script>
+</body>
+</html>
