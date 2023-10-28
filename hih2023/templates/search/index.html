@@ -1,85 +1,112 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="1.css">
-    <title>Главная страница</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
+{% extends "base.html" %}
+{% load static %}
 
-        header {
-            background: #FEC502;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 30px;
-        }
+{% block head %}
+<link rel="stylesheet" href="1.css">
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-        }
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
 
-        .header-buttons {
-            display: flex;
-            gap: 10px;
-        }
+    header {
+        background: #FEC502;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 30px;
+    }
 
-        .register-button,
-        .login-button {
-            background: #222127;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="logo">Главная страница</div>
-        <div class="header-buttons">
-            <button class="register-button">Регистрация</button>
-            <button class="login-button">Вход</button>
-        </div>
-    </header>
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .header-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .register-button,
+    .login-button {
+        background: #222127;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    #dropdownMenu {
+        display: grid;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 200px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        padding: 12px 16px;
+      }
+</style>
+{% endblock %}
+
+{% block title %} Главная {% endblock %}
+
+{% block content %}
+<main>
     <div class="search-container">
         <div class="search-icon">🔍</div> <!-- Вместо "🔍" добавьте код для изображения лупы -->
         <div class="search-label">Поиск документов</div>
         <form method="POST">
             {% csrf_token %}
-        <input type="text" name="input_field" class="search-input" placeholder="Поиск...">
-            </form>
-    </div>
-    <main>
-            {% if docs is not None %}
-        <ul>
-            <li> {{docs}} </li>
-        </ul>
-        {% endif %}
-        <section class="volunteer-info">
-            <div class="volunteer-description">
-                
-                
-   
-            <div class="volunteer-photos">
-                <div class="volunteer-photo" style="background-image: url('volunteer1.jpg');">
-                    <p>Делаем добро вместе</p>
-                </div>
-                <div class="volunteer-photo" style="background-image: url('volunteer2.jpg');"></div>
+            <input name="document_name" id="doc_name" type="text" class="search-input" placeholder="Поиск...">
+            <button type="button" id="dropdownBtn">F</button>
+            <div id="dropdownMenu" style="display: none">
+              <label>type</label> <input name="type_input"> <br>
+
+              <label>number</label> <input name="number_input"> <br>
+
+              <label>enter date</label> <input name="enter_date_input"> <br>
+
+              <label>key words</label> <input name="key_words_input"> <br>
             </div>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2023 Ваша Организация</p>
-    </footer>
-    <script>
-        // Ваш JavaScript скрипт здесь, если он необходим
-    </script>
-</body>
-</html>
+        </form>
+    </div>
+    <section class="found_documents">
+        {% if request.method == "POST" %}
+                {% for document, data in documents.items %}
+                <button name={{document}} >
+                    {{ data.document_name }}
+                </button>
+                <br/>
+                {% endfor %}
+        {% endif %}
+    </section>
+</main>
+{% endblock %}
+
+{% block script %}
+<script>
+    let dropdownBtn = document.getElementById("dropdownBtn");
+    let dropdownMenu = document.getElementById("dropdownMenu");
+
+    let mainInput = document.getElementById("doc_name")
+    dropdownBtn.addEventListener("click", function() {
+        if (dropdownMenu.style.display === "none") {
+          dropdownMenu.style.display = "grid";
+        } else {
+          dropdownMenu.style.display = "none";
+        }
+    });
+
+    document.querySelector('form').addEventListener('keypress', function(event) {
+     if (event.keyCode === 13) {
+       event.preventDefault();
+       this.submit();
+     }
+   });
+
+
+
+
+</script>
+{% endblock %}

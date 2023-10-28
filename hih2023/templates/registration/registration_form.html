@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="col d-flex justify-content-center">
+    <div class="card" style="width: 40rem;">
+      <div class="card-header">
+        Регистрация пользователя
+      </div>
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+          {{ form.full_name.label_tag }}
+          {{ form.full_name }}
+          {{ form.email.label_tag }}
+          {{ form.email }}
+          {{ form.password.label_tag }}
+          {{ form.password }}
+          <button type="submit" class="btn btn-primary">Создать</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
