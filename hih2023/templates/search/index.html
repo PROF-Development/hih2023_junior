@@ -37,6 +37,15 @@
         border-radius: 5px;
         cursor: pointer;
     }
+
+    #dropdownMenu {
+        display: grid;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 200px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        padding: 12px 16px;
+      }
 </style>
 {% endblock %}
 
@@ -49,25 +58,55 @@
         <div class="search-label">Поиск документов</div>
         <form method="POST">
             {% csrf_token %}
-            <input type="text" name="input_field" class="search-input" placeholder="Поиск...">
+            <input name="document_name" id="doc_name" type="text" class="search-input" placeholder="Поиск...">
+            <button type="button" id="dropdownBtn">F</button>
+            <div id="dropdownMenu" style="display: none">
+              <label>type</label> <input name="type_input"> <br>
+
+              <label>number</label> <input name="number_input"> <br>
+
+              <label>enter date</label> <input name="enter_date_input"> <br>
+
+              <label>key words</label> <input name="key_words_input"> <br>
+            </div>
         </form>
     </div>
-    {% if docs is not None %}
-    <ul>
-        <li> {{docs}} </li>
-    </ul>
-    {% endif %}
-    <section class="volunteer-info">
-        <div class="volunteer-description"> </div>
-
-
-
-        <div class="volunteer-photos">
-            <div class="volunteer-photo" style="background-image: url('volunteer1.jpg');">
-                <p>Делаем добро вместе</p>
-            </div>
-            <div class="volunteer-photo" style="background-image: url('volunteer2.jpg');"></div>
-        </div>
+    <section class="found_documents">
+        {% if request.method == "POST" %}
+                {% for document, data in documents.items %}
+                <button name={{document}} >
+                    {{ data.document_name }}
+                </button>
+                <br/>
+                {% endfor %}
+        {% endif %}
     </section>
 </main>
+{% endblock %}
+
+{% block script %}
+<script>
+    let dropdownBtn = document.getElementById("dropdownBtn");
+    let dropdownMenu = document.getElementById("dropdownMenu");
+
+    let mainInput = document.getElementById("doc_name")
+    dropdownBtn.addEventListener("click", function() {
+        if (dropdownMenu.style.display === "none") {
+          dropdownMenu.style.display = "grid";
+        } else {
+          dropdownMenu.style.display = "none";
+        }
+    });
+
+    document.querySelector('form').addEventListener('keypress', function(event) {
+     if (event.keyCode === 13) {
+       event.preventDefault();
+       this.submit();
+     }
+   });
+
+
+
+
+</script>
 {% endblock %}

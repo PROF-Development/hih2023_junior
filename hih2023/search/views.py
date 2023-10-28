@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import update_session_auth_hash, login
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 from .forms import RegistrationForm, PasswordChangingForm
-from .models import User
+from .models import User, UserProfile
 
 
 def profile_detail(request, username):
@@ -46,14 +46,6 @@ def registration_view(request):
 @login_required
 def change_password(request):
     template = 'registration/password_change_form.html'
-    # if request.method == 'POST':
-    #     form = CustomPasswordChangeForm(request.user, request.POST)
-    #     if form.is_valid():
-    #         user = form.save()
-    #         update_session_auth_hash(request, user)
-    #         return redirect('search:profile')
-    # else:
-    #     form = CustomPasswordChangeForm(request.user)
     if request.method == "POST":
         form = PasswordChangingForm(user=request.user, data=request.POST)
         if form.is_valid():
@@ -62,3 +54,13 @@ def change_password(request):
     else:
         form = PasswordChangingForm(request.user)
     return render(request, template, {'form': form})
+
+
+def is_verified_user(user):
+    if user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=user)
+            return user_profile.roles == 'verified' or user.is_superuser
+        except UserProfile.DoesNotExist:
+            return False
+    return False
