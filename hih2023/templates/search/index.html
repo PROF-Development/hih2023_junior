@@ -61,23 +61,32 @@
             <input name="document_name" id="doc_name" type="text" class="search-input" placeholder="Поиск...">
             <button type="button" id="dropdownBtn">F</button>
             <div id="dropdownMenu" style="display: none">
-              <label>type</label> <input name="type_input"> <br>
+              <label>Тип</label> <input name="type"> <br>
 
-              <label>number</label> <input name="number_input"> <br>
+              <label>Номер документа</label> <input name="number"> <br>
 
-              <label>enter date</label> <input name="enter_date_input"> <br>
+              <label>Дата выпуска</label> <input type="date" name="date"> <br>
 
-              <label>key words</label> <input name="key_words_input"> <br>
+                <label>Дата входа в действие</label> <input type="date" name="enter_date"> <br>
+
+              <label>Ключевые слова</label> <input name="key_words"> <br>
             </div>
         </form>
     </div>
     <section class="found_documents">
         {% if request.method == "POST" %}
                 {% for document, data in documents.items %}
-                <button name={{document}} >
-                    {{ data.document_name }}
-                </button>
-                <br/>
+
+                    {% if data.file_stored %}
+                    <a href="viewer?id={{document}}{{data.file_type}}"><button name={{document}} >
+                                {{ data.document_name }}
+                            </button>
+                        </a>
+                    {% else %}
+                    <button name={{document}} >
+                        {{ data.document_name }}
+                    </button>
+                    {% endif %}
                 {% endfor %}
         {% endif %}
     </section>

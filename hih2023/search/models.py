@@ -9,4 +9,3 @@ class UserProfile(models.Model):
 
 class Role(models.Model):
     name = models.CharField(max_length=64)
-

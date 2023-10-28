@@ -5,6 +5,14 @@ from django.contrib.auth.decorators import login_required, permission_required
 from .forms import RegistrationForm, PasswordChangingForm
 from .models import User, UserProfile
 
+from django.contrib.auth import login
+from .forms import RegistrationForm
+from .models import User
+from django.http import FileResponse, Http404, HttpResponse
+
+# import models as model
+import search.processing_modules as function
+
 
 def profile_detail(request, username):
     template = 'search/profile.html'
@@ -17,16 +25,25 @@ def profile_detail(request, username):
 
 
 def index(request):
-    context = {'docs': None}
+    context = {"documents": None}
     template = 'search/index.html'
     if request.method == "POST":
-        form = request.POST.dict()
-        context['docs'] = form['input_field']
-        # print(form['input_field'].value())
-        print(form['input_field'])
-        return render(request, template, context)
-    else:
-        return render(request, template)
+        req_dict = request.POST.dict()
+        context["documents"] = function.get_documents(req_dict)
+
+    return render(request, template, context)
+
+
+# Does not work properly at the moment
+def viewer(request):
+    if request.method == 'GET':
+        filename = request.GET.get('id', '')
+        application = filename.split('.')[-1]
+
+        try:
+            return FileResponse(open(f'data/files/{filename}', 'rb'), content_type=f'application/{application}')
+        except FileNotFoundError:
+            raise Http404()
 
 
 def registration_view(request):
