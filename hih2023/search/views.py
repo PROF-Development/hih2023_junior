@@ -1,7 +1,7 @@
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import update_session_auth_hash, login
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 
 from .forms import RegistrationForm, PasswordChangingForm
 from .models import User, UserProfile
@@ -35,6 +35,9 @@ def profile_detail(request, username):
 
 
 def index(request):
+    if not request.user.is_authenticated:
+        return redirect('/auth/login')
+
     context = {"documents": None}
     template = 'search/index.html'
     if request.method == "POST":
@@ -44,8 +47,11 @@ def index(request):
     return render(request, template, context)
 
 
-# Does not work properly at the moment
+@login_required
 def viewer(request):
+    if request.user.userprofile.role == 'user':
+        return redirect('/')
+
     if request.method == 'GET':
         filename = request.GET.get('id', '')
         application = filename.split('.')[-1]
@@ -63,6 +69,11 @@ def registration_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            obj, created = UserProfile.objects.get_or_create(
+                user=user,
+                role='user'
+            )
+            obj.save()
             return redirect('search:index')
     else:
         form = RegistrationForm()
@@ -83,11 +94,28 @@ def change_password(request):
     return render(request, template, {'form': form})
 
 
-def is_verified_user(user):
+def is_verified_user(user, role):
     if user.is_authenticated:
         try:
             user_profile = UserProfile.objects.get(user=user)
-            return user_profile.roles == 'verified' or user.is_superuser
+            return user_profile.roles == role or user.is_superuser
         except UserProfile.DoesNotExist:
             return False
     return False
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def permissions(request):
+    if request.method == "POST":
+        print(request.POST)
+        for i in range(len(request.POST.getlist('input_email'))):
+            try:
+                u = User.objects.get(username=request.POST.getlist('input_email')[i])
+                u.userprofile.role = request.POST.getlist('select')[i]
+                u.userprofile.save()
+            except Exception:
+                return redirect('/')
+    template = 'search/permissions.html'
+    users = User.objects.all()
+    context = {'users': users}
+    return render(request, template, context)

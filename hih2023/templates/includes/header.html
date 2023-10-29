@@ -1,18 +1,21 @@
+{% load static %}
 <header>
-    <div class="logo">
-        <a href="{% url 'search:index' %}">
-        Главная страница
+    <a href="{% url 'search:index' %}"> <img src="{% static 'imgs/signal_logo.png' %}" alt="Logo" class="logo"> </a>
+    <div class="header-right">
+        {% if user.is_authenticated %}
+        <a href="{% url 'search:profile' user.username %}">
+            <button class="btn">Профиль</button>
         </a>
+        <a href="{% url 'logout' %}">
+            <button class="btn">Выйти</button>
+        </a>
+        {% else %}
+        <a href="{% url 'login' %}">
+      <button class="btn">Вход</button>
+        </a>
+        <a href="{% url 'registration' %}">
+      <button class="btn">Регистрация</button>
+        </a>
+        {% endif %}
     </div>
-    {% if user.is_authenticated %}
-    <div class="header-buttons">
-        <a href="{% url 'logout' %}"> <button class="logout-button">Выход</button> </a>
-        <a href="{% url 'search:profile' user.username %}"> <button class="account-button">Личный кабинет</button> </a>
-    </div>
-    {% else %}
-    <div class="header-buttons">
-        <a href="{% url 'registration' %}"> <button class="register-button">Регистрация</button> </a>
-        <a href="{% url 'login' %}"> <button class="login-button">Вход</button> </a>
-    </div>
-    {% endif %}
-</header>
+  </header>

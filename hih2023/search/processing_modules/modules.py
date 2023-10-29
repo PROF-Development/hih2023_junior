@@ -96,8 +96,6 @@ def search_documents(searching_document: dict) -> dict:
                         found_documents[number_of_document] = current_data
                         print("here")
                         break
-
-
     return found_documents
 
 
