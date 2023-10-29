@@ -1,3 +1,4 @@
+from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import update_session_auth_hash, login
 from django.contrib.auth.decorators import login_required, permission_required
@@ -15,6 +16,15 @@ import search.processing_modules as function
 
 
 def profile_detail(request, username):
+    if request.method == "POST" and request.FILES:
+        # print(request.POST["input_file"], type(request.POST["input_file"]))
+        file_data = request.FILES["input_file"]
+        file_name = file_data.name
+        file_type = file_name.split(".")[-1]
+        fs = FileSystemStorage()
+        if file_type == "xlsx":
+            fs.save("xxx.xlsx", file_data)
+            function.parse_excel_to_json(file_name)
     template = 'search/profile.html'
     profile = get_object_or_404(User, username=username)
     context = {
