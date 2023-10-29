@@ -9,7 +9,7 @@ def parse_excel_to_json(file_name: str):
         data: dict = json.load(file)
     current_count_file = len(data.keys())
     excel_data = pd.read_excel("./data/files/xxx.xlsx").to_dict()
-    #print(excel_data)
+    print(excel_data)
     new_strings_count = len(excel_data['№'].keys()) - current_count_file
     # print(new_strings_count, len(excel_data.keys()), current_count_file)
     for i in range(new_strings_count):

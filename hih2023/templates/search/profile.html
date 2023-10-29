@@ -168,9 +168,13 @@
                     </div>
                     </div>
                     <div class="right-content">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
                         <div class="overlap-2">
-                            <div class="text-wrapper-7">Прикрепить<br />документ</div>
+                            <input value="Прикрепить" name="input_file" type="file" />
+                            <button type="submit"> Отправить </button>
                         </div>
+                        </form>
                         <div class="element-wrapper">
                             <img class="img" src="img/1.png" />
                         </div>

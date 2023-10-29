@@ -2,22 +2,22 @@
     "1": {
         "type": "ГОСТ (гос. стандарт)",
         "document_name": "Информационные технологии. Комплекс стандартов на автоматизированные системы управления",
-        "number": "34.602- 2020",
+        "number": "34.602-2020",
         "date": "2020-12-22",
         "enter_date": "2022-01-01",
         "key_words": "",
-        "file_stored": false,
-        "file_type": ""
+        "file_stored": true,
+        "file_type": ".pdf"
     },
     "2": {
         "type": "РД (рук документ)",
         "document_name": "Котлы паровые и водогрейные, трубопроводы пара и горячей воды.",
-        "number": "2730.940. 103-92",
+        "number": "2730.940.103-92",
         "date": "1992-12-25",
         "enter_date": "1993-01-01",
         "key_words": "",
         "file_stored": false,
-        "file_type": ""
+        "file_type": ".pdf"
     },
     "3": {
         "type": "Указ (президента)",
@@ -27,7 +27,7 @@
         "enter_date": "2023-10-01",
         "key_words": "",
         "file_stored": false,
-        "file_type": ""
+        "file_type": ".pdf"
     },
     "4": {
         "type": "Постановление правительства",
@@ -37,17 +37,17 @@
         "enter_date": "2023-11-01",
         "key_words": "",
         "file_stored": false,
-        "file_type": ""
+        "file_type": ".pdf"
     },
     "5": {
         "type": "СТО (стандарт организации)",
         "document_name": "Проведения аттестации испытательной лаборатории",
-        "number": "7.5.18- 2020",
+        "number": "7.5.18-2020",
         "date": "2023-05-23",
         "enter_date": "2023-07- 01",
         "key_words": "",
         "file_stored": false,
-        "file_type": ""
+        "file_type": ".pdf"
     },
     "6": {
         "type": "МИ (металогическая инструкция)",
@@ -57,7 +57,7 @@
         "enter_date": "2019-01-01",
         "key_words": "",
         "file_stored": false,
-        "file_type": ""
+        "file_type": ".pdf"
     },
     "7": {
         "type": "РИ (Рабочая инструкция)",
@@ -67,7 +67,7 @@
         "enter_date": "2016-08-01",
         "key_words": "",
         "file_stored": false,
-        "file_type": ""
+        "file_type": ".pdf"
     },
     "8": {
         "type": "Приказ (директора предприятия)",
@@ -77,7 +77,7 @@
         "enter_date": "2023-01-01",
         "key_words": "",
         "file_stored": false,
-        "file_type": ""
+        "file_type": ".pdf"
     },
     "9": {
         "type": "Распоряжение (директора предприятия)",
@@ -87,7 +87,7 @@
         "enter_date": "2023-06-01",
         "key_words": "",
         "file_stored": false,
-        "file_type": ""
+        "file_type": ".pdf"
     },
     "10": {
         "type": "Уведомление (подразделений предприятия",
@@ -97,16 +97,16 @@
         "enter_date": "2023-04- 01",
         "key_words": "",
         "file_stored": false,
-        "file_type": ""
+        "file_type": ".pdf"
     },
     "11": {
         "type": "Договор (между разными предприятиями)",
         "document_name": "О поставке технологической оснастки для оборудования",
-        "number": "334 - 25/45788",
+        "number": "334-25/45788",
         "date": "2023-08-15",
         "enter_date": "2023-09- 01",
         "key_words": "",
         "file_stored": false,
-        "file_type": ""
+        "file_type": ".pdf"
     }
 }
