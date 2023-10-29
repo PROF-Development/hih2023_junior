@@ -1,5 +1,5 @@
 <header>
-    <div class="logo">
+    <!--<div class="logo">
         <a href="{% url 'search:index' %}">
         Главная страница
         </a>
@@ -14,5 +14,28 @@
         <a href="{% url 'registration' %}"> <button class="register-button">Регистрация</button> </a>
         <a href="{% url 'login' %}"> <button class="login-button">Вход</button> </a>
     </div>
-    {% endif %}
+    {% endif %}-->
+
+    <div class="div">
+            <div class="overlap">
+                <img class="image" src="img/image-2.png" />
+
+                <div class="menu-button">
+                    <div class="menu-icon"></div>
+                    <div class="menu-icon"></div>
+                    <div class="menu-icon"></div>
+                </div>
+
+                <div class="dropdown-menu">
+                  <a href="{% url 'search:profile' user.username%}">
+                    <div class="menu-item">Личный кабинет</div>
+                  </a>
+                    <a href="{% url 'search:index' %}">
+                    <div class="menu-item">Главная страница</div>
+                    </a>
+                    <a href="{% url 'logout' %}">
+                    <div class="menu-item">Выход</div>
+                    </a>
+                </div>
+            </div>
 </header>
