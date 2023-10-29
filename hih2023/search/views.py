@@ -25,6 +25,9 @@ def profile_detail(request, username):
 
 
 def index(request):
+    if not request.user.is_authenticated:
+        return redirect('/auth/login')
+
     context = {"documents": None}
     template = 'search/index.html'
     if request.method == "POST":

@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% load static %}
 {% block head %}
-<head>
     <!--<link rel="stylesheet" href="globals.css" />-->
-    <link rel="stylesheet" type="text/css" href="../../static/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/header_footer.css' %}">
     <!--<style>
         /* Стили для текстовых полей в "Rectangle 1", "Rectangle 2" и "Rectangle 3" */
         .rectangle input[type="text"],
@@ -128,7 +129,6 @@
         }
 
     </style>-->
-</head>
 {% endblock %}
 
 {% block title %}
@@ -151,15 +151,15 @@
                     <label class="text_wrapper_2">Личный кабинет</label>
                     <label class="text-wrapper-3">ФИО</label>
 
-                        <input type="text" class="rectangle" name="rectangle1" placeholder="Rectangle 1" />
+                        <input type="text" class="rectangle" name="rectangle1" placeholder="{{profile.last_name}} {{profile.first_name}}" />
 
                     <label class="text-wrapper-4">Почта</label>
 
-                        <input type="text" class="rectangle-2" name="rectangle2" placeholder="Rectangle 2" />
+                        <input type="text" class="rectangle-2" name="rectangle2" placeholder="{{profile.email}}" />
 
                     <label class="text-wrapper-5">Пароль</label>
 
-                        <input type="text" class="rectangle-3" name="rectangle3" placeholder="Rectangle 3" />
+                        <input type="text" class="rectangle-3" name="rectangle3" placeholder="******" />
 
                     <div class="div-wrapper">
                         <a href="{% url 'password_change' %}">
@@ -167,7 +167,6 @@
                         </a>
                     </div>
                     </div>
-
                     <div class="right-content">
                         <div class="overlap-2">
                             <div class="text-wrapper-7">Прикрепить<br />документ</div>
